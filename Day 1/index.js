@@ -1,6 +1,8 @@
 // Advent of Code 2023 Day 1 -- Trebuchet?!
 // https://adventofcode.com/2023/day/
 
+// PART 1
+
 // The newly-improved calibration document consists of lines of text; each line originally contained
 // a specific calibration value that the Elves now need to recover.
 // On each line, the calibration value can be found by combining the first digit
@@ -17,6 +19,7 @@
 // Adding these together produces 142.
 
 // Consider your entire calibration document. What is the sum of all of the calibration values?
+
 const fs = require("fs");
 
 const content = fs.readFileSync("day1Data.txt", { encoding: "utf-8" });
@@ -24,19 +27,20 @@ const lines = content.split("\n");
 // console.log(lines);
 // console.log(lines.length); //1000
 
-let data = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
+// SAMPLE DATA FROM PROMPT
+// let data = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
 // console.log(data);
 // console.log("1abc2".match(/\d+/g).join(""));
 // This thread was really useful for getting the Regex set up: https://stackoverflow.com/questions/29000695/looping-through-an-array-of-numbers-and-letters-and-extract-only-the-numbers
 let numbers = [];
-for (let i = 0; i < data.length; i++) {
-  let value = data[i].match(/\d+/g).join("");
+for (let i = 0; i < lines.length; i++) {
+  let value = lines[i].match(/\d+/g).join("");
   if (value.length === 1) {
     value += value;
   }
   numbers.push(value);
 }
-console.log(numbers);
+// console.log(numbers);
 
 let newValues = [];
 for (let i = 0; i < numbers.length; i++) {
@@ -46,16 +50,41 @@ for (let i = 0; i < numbers.length; i++) {
     concatenatedValue = numbers[i][0] + numbers[i][numbers[i].length - 1];
     newValues.push(Number(concatenatedValue));
   }
-  //   console.log(concatenatedValue);
-  console.log(newValues);
+  //   console.log(newValues);
 }
 let sum = 0;
 newValues.forEach((x) => {
   sum += x;
 });
-console.log(sum);
+// console.log(sum);
 
-// Loop through each line of text/numbers
-// If the character is a number, push it to the numbers array
-// Grab the first and last numbers from the numbers array and put them in a new array in values
-// Once all lines have been looped through, add all numbers in values array together and put in valuesSum variable
+// PART 2
+
+// Your calculation isn't quite right. It looks like some of the digits are actually spelled
+// out with letters: one, two, three, four, five, six, seven, eight, and nine also count as valid "digits".
+
+// Equipped with this new information, you now need to find the real first and last digit on each line.
+// For example:
+
+// two1nine
+// eightwothree
+// abcone2threexyz
+// xtwone3four
+// 4nineeightseven2
+// zoneight234
+// 7pqrstsixteen
+
+// In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76.
+// Adding these together produces 281.
+
+// What is the sum of all of the calibration values?
+
+let data = [
+  "two1nine",
+  "eightwothree",
+  "abcone2threexyz",
+  "xtwone3four",
+  "4nineeightseven2",
+  "zoneight234",
+  "7pqrstsixteen",
+];
