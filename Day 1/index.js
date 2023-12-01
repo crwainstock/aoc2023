@@ -37,20 +37,23 @@ for (let i = 0; i < data.length; i++) {
   numbers.push(value);
 }
 console.log(numbers);
+
 let newValues = [];
 for (let i = 0; i < numbers.length; i++) {
   let concatenatedValue = "";
 
   if (numbers[i].length >= 1) {
     concatenatedValue = numbers[i][0] + numbers[i][numbers[i].length - 1];
-    newValues.push(concatenatedValue);
+    newValues.push(Number(concatenatedValue));
   }
   //   console.log(concatenatedValue);
   console.log(newValues);
 }
-
-let values = [];
-let valuesSum = 0;
+let sum = 0;
+newValues.forEach((x) => {
+  sum += x;
+});
+console.log(sum);
 
 // Loop through each line of text/numbers
 // If the character is a number, push it to the numbers array
