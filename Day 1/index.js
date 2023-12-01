@@ -17,3 +17,12 @@
 // Adding these together produces 142.
 
 // Consider your entire calibration document. What is the sum of all of the calibration values?
+
+let numbers = [];
+let values = [];
+let valuesSum = 0;
+
+// Loop through each line of text/numbers
+// If the character is a number, push it to the numbers array
+// Grab the first and last numbers from the numbers array and put them in a new array in values
+// Once all lines have been looped through, add all numbers in values array together and put in valuesSum variable
