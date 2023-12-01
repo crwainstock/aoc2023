@@ -32,31 +32,31 @@ const lines = content.split("\n");
 // console.log(data);
 // console.log("1abc2".match(/\d+/g).join(""));
 // This thread was really useful for getting the Regex set up: https://stackoverflow.com/questions/29000695/looping-through-an-array-of-numbers-and-letters-and-extract-only-the-numbers
-let numbers = [];
-for (let i = 0; i < lines.length; i++) {
-  let value = lines[i].match(/\d+/g).join("");
-  if (value.length === 1) {
-    value += value;
-  }
-  numbers.push(value);
-}
-// console.log(numbers);
+// let numbers = [];
+// for (let i = 0; i < lines.length; i++) {
+//   let value = lines[i].match(/\d+/g).join("");
+//   if (value.length === 1) {
+//     value += value;
+//   }
+//   numbers.push(value);
+// }
+// // console.log(numbers);
 
-let newValues = [];
-for (let i = 0; i < numbers.length; i++) {
-  let concatenatedValue = "";
+// let newValues = [];
+// for (let i = 0; i < numbers.length; i++) {
+//   let concatenatedValue = "";
 
-  if (numbers[i].length >= 1) {
-    concatenatedValue = numbers[i][0] + numbers[i][numbers[i].length - 1];
-    newValues.push(Number(concatenatedValue));
-  }
-  //   console.log(newValues);
-}
-let sum = 0;
-newValues.forEach((x) => {
-  sum += x;
-});
-// console.log(sum);
+//   if (numbers[i].length >= 1) {
+//     concatenatedValue = numbers[i][0] + numbers[i][numbers[i].length - 1];
+//     newValues.push(Number(concatenatedValue));
+//   }
+//   //   console.log(newValues);
+// }
+// let sum = 0;
+// newValues.forEach((x) => {
+//   sum += x;
+// });
+// // console.log(sum);
 
 // PART 2
 
@@ -88,3 +88,66 @@ let data = [
   "zoneight234",
   "7pqrstsixteen",
 ];
+
+function wordsToDigits(word) {
+  const wordToDigitMap = {
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+  };
+
+  // Regular expression to match the spelled-out numbers
+  const regex = new RegExp(Object.keys(wordToDigitMap).join("|"), "gi");
+
+  // Replace the spelled-out numbers with digits
+  const stringWithDigits = word.replace(
+    regex,
+    (match) => wordToDigitMap[match.toLowerCase()]
+  );
+  console.log(stringWithDigits);
+  return stringWithDigits;
+}
+
+let numbers = [];
+
+for (let i = 0; i < data.length; i++) {
+  const stringWithDigits = wordsToDigits(data[i]);
+
+  let value = stringWithDigits.match(/\d+/g).join("");
+
+  if (value.length === 1) {
+    // If the value has only one digit, concatenate it with itself
+    value += value;
+  }
+
+  numbers.push(Number(value));
+}
+
+console.log(numbers);
+
+let newValues = [];
+for (let i = 0; i < numbers.length; i++) {
+  let concatenatedValue = "";
+
+  if (numbers[i].toString().length >= 1) {
+    concatenatedValue =
+      numbers[i].toString()[0] +
+      numbers[i].toString()[numbers[i].toString().length - 1];
+    newValues.push(Number(concatenatedValue));
+  }
+  //   console.log(newValues);
+}
+console.log(newValues);
+let sum = 0;
+
+newValues.forEach((x) => {
+  sum += x;
+});
+
+console.log(sum);
