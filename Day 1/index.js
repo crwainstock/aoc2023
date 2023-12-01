@@ -18,13 +18,25 @@
 
 // Consider your entire calibration document. What is the sum of all of the calibration values?
 const fs = require("fs");
-const filePath = "day1Data.txt";
 
 const content = fs.readFileSync("day1Data.txt", { encoding: "utf-8" });
 const lines = content.split("\n");
 // console.log(lines);
 // console.log(lines.length); //1000
+
+let data = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
+// console.log(data);
+// console.log("1abc2".match(/\d+/g).join(""));
 let numbers = [];
+for (let i = 0; i < data.length; i++) {
+  let value = data[i].match(/\d+/g).join("");
+  if (value.length === 1) {
+    value += value;
+  }
+  numbers.push(value);
+}
+console.log(numbers);
+
 let values = [];
 let valuesSum = 0;
 
@@ -32,11 +44,3 @@ let valuesSum = 0;
 // If the character is a number, push it to the numbers array
 // Grab the first and last numbers from the numbers array and put them in a new array in values
 // Once all lines have been looped through, add all numbers in values array together and put in valuesSum variable
-
-for (let i = 0; i < lines.length; i++) {
-  const character = lines[i];
-
-  if (!isNaN(character)) {
-    console.log("Numeric character found:", character);
-  }
-}
