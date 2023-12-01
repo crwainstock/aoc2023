@@ -27,6 +27,7 @@ const lines = content.split("\n");
 let data = ["1abc2", "pqr3stu8vwx", "a1b2c3d4e5f", "treb7uchet"];
 // console.log(data);
 // console.log("1abc2".match(/\d+/g).join(""));
+// This thread was really useful for getting the Regex set up: https://stackoverflow.com/questions/29000695/looping-through-an-array-of-numbers-and-letters-and-extract-only-the-numbers
 let numbers = [];
 for (let i = 0; i < data.length; i++) {
   let value = data[i].match(/\d+/g).join("");
@@ -36,6 +37,17 @@ for (let i = 0; i < data.length; i++) {
   numbers.push(value);
 }
 console.log(numbers);
+let newValues = [];
+for (let i = 0; i < numbers.length; i++) {
+  let concatenatedValue = "";
+
+  if (numbers[i].length >= 1) {
+    concatenatedValue = numbers[i][0] + numbers[i][numbers[i].length - 1];
+    newValues.push(concatenatedValue);
+  }
+  //   console.log(concatenatedValue);
+  console.log(newValues);
+}
 
 let values = [];
 let valuesSum = 0;
