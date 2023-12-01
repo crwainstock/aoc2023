@@ -18,6 +18,22 @@
 
 // Consider your entire calibration document. What is the sum of all of the calibration values?
 
+const filePath = "day1Data.txt";
+
+try {
+  const response = await fetch(filePath);
+
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch ${filePath}: ${response.status} ${response.statusText}`
+    );
+  }
+  const data = await response.text();
+  console.log(data);
+} catch (error) {
+  console.error("Error fetching file:", error);
+}
+
 let numbers = [];
 let values = [];
 let valuesSum = 0;
