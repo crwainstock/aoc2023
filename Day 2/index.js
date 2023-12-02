@@ -27,3 +27,24 @@
 
 // Determine which games would have been possible if the bag had been loaded with only 12 red cubes,
 // 13 green cubes, and 14 blue cubes. What is the sum of the IDs of those games?
+
+// Get data from day2Data
+const fs = require("fs");
+
+// PROCESS THE DATA -- SEPARATE INTO LINES, PUT LINES INTO OBJECT WITH KEY/VALUE PAIRS
+const content = fs.readFileSync("day2Data.txt", { encoding: "utf-8" });
+const lines = content.split("\n").filter(Boolean);
+
+// Initialize an empty object to store the processed data
+const gamesData = {};
+
+// Iterate through each line to extract game number and information
+lines.forEach((line) => {
+  const [gameNumber, gameInfo] = line.split(":");
+  const gameKey = gameNumber.trim();
+  const gameValue = gameInfo.trim();
+
+  // Store the information in the gamesData object
+  gamesData[gameKey] = gameValue;
+});
+console.log({ gamesData }); // object with key, value pairs
