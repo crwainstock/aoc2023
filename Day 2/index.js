@@ -36,7 +36,7 @@ const content = fs.readFileSync("day2Data.txt", { encoding: "utf-8" });
 const lines = content.split("\n").filter(Boolean);
 
 // Initialize an empty object to store the processed data
-const gamesData = {};
+const gamesData = [];
 
 lines.forEach((line) => {
   const [gameNumber, gameInfo] = line.split(":");
@@ -46,12 +46,44 @@ lines.forEach((line) => {
   // Store the information in the gamesData object
   gamesData[gameKey] = gameValues;
 });
-console.log({ gamesData }); // object with key, value pairs
+console.log({ gamesData }); // object with array with arrays of each grab
 
-// let data = {
-// "Game 1": "3 blue, 4 red, 1 red, 2 green, 6 blue; 2 green"
-// "Game 2": 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
-// "Game 3": 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
-// "Game 4": 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
-// "Game 5": 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
-// }
+const data = {
+  "Game 1": [
+    ["7 blue", "5 red"],
+    ["10 red", "7 blue"],
+    ["5 blue", "4 green", "15 red"],
+    ["4 green", "6 red", "7 blue"],
+    ["5 green", "8 blue", "4 red"],
+    ["5 red", "4 blue", "3 green"],
+  ],
+  "Game 2": [
+    ["8 green", "3 red"],
+    ["7 blue", "6 red", "8 green"],
+    ["7 blue", "3 green", "6 red"],
+    ["8 green", "6 blue", "11 red"],
+    ["6 blue", "3 green", "12 red"],
+  ],
+  "Game 3": [
+    ["6 blue", "3 red", "7 green"],
+    ["3 red", "3 green", "8 blue"],
+    ["8 blue", "11 red", "4 green"],
+    ["5 blue", "7 red", "6 green"],
+    ["9 blue", "7 green", "1 red"],
+  ],
+  "Game 4": [
+    ["3 red", "4 green"],
+    ["5 red", "1 blue"],
+    ["2 green"],
+    ["3 green", "1 blue"],
+    ["2 green", "1 blue", "1 red"],
+  ],
+  "Game 5": [
+    ["17 red", "5 blue", "3 green"],
+    ["8 green", "9 red", "10 blue"],
+    ["2 green", "9 blue", "4 red"],
+  ],
+};
+
+// The Elf would first like to know which games would have been possible if the bag contained only
+// 12 red cubes, 13 green cubes, and 14 blue cubes?
