@@ -89,35 +89,40 @@ let data = [
   "7pqrstsixteen",
 ];
 
+// OMG. This Reddit thread was really helpful for working out the issue with Part 2.
+// https://www.reddit.com/r/adventofcode/comments/1884fpl/comment/kbirvjc/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
+// It seems like an oversight that this aspect of the calibration wasn't found in the sample data given.
 function wordsToDigits(word) {
-  const wordToDigitMap = {
-    one: 1,
-    two: 2,
-    three: 3,
-    four: 4,
-    five: 5,
-    six: 6,
-    seven: 7,
-    eight: 8,
-    nine: 9,
-  };
-
-  // Regular expression to match the spelled-out numbers
-  const regex = new RegExp(Object.keys(wordToDigitMap).join("|"), "gi");
+  const digits = [
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+  ];
+  const modifiedWord = digits.reduce(
+    (acc, word, index) => acc.replaceAll(word, word + (index + 1) + word),
+    word
+  );
 
   // Replace the spelled-out numbers with digits
-  const stringWithDigits = word.replace(
-    regex,
-    (match) => wordToDigitMap[match.toLowerCase()]
+  const stringWithDigits = modifiedWord.replace(
+    new RegExp(digits.join("|"), "gi"),
+    (match) => (match.length === 3 ? match[0] : "")
   );
+
   console.log(stringWithDigits);
   return stringWithDigits;
 }
 
 let numbers = [];
 
-for (let i = 0; i < data.length; i++) {
-  const stringWithDigits = wordsToDigits(data[i]);
+for (let i = 0; i < lines.length; i++) {
+  const stringWithDigits = wordsToDigits(lines[i]);
 
   let value = stringWithDigits.match(/\d+/g).join("");
 
