@@ -33,57 +33,70 @@ const fs = require("fs");
 
 // PROCESS THE DATA -- SEPARATE INTO LINES, PUT LINES INTO OBJECT WITH KEY/VALUE PAIRS
 const content = fs.readFileSync("day2Data.txt", { encoding: "utf-8" });
-const lines = content.split("\n").filter(Boolean);
+const lines = content;
 
-// Initialize an empty object to store the processed data
-const gamesData = [];
+// // Initialize an empty object to store the processed data
+// const gamesData = [];
 
-lines.forEach((line) => {
-  const [gameNumber, gameInfo] = line.split(":");
-  const gameKey = gameNumber.trim();
-  const gameValues = gameInfo.split(";").map((value) => value.trim());
+// lines.forEach((line) => {
+//   const [gameNumber, gameInfo] = line.split(":");
+//   const gameValues = gameInfo
+//     .split(";")
+//     .map((value) => value.split(",").map((item) => item.trim()));
 
-  // Store the information in the gamesData object
-  gamesData[gameKey] = gameValues;
+//   // Store the information in the gamesData array
+//   gamesData.push(gameValues);
+// });
+// console.log(gamesData); // array with arrays and arrays
+
+let data = fs.readFileSync("testData.txt", { encoding: "utf-8" });
+
+let control = { red: 12, green: 13, blue: 14 };
+let p1Total = 0;
+let p2Total = 0;
+
+lines.split("\n").forEach((line, lineIndex) => {
+  let controlLine = { red: 0, green: 0, blue: 0 };
+  let isValid = true;
+  //   console.log(line);
+  line
+    .split(":")[1]
+    .trim()
+    .replaceAll(";", ",")
+    .split(",")
+    .forEach((cube) => {
+      cube = cube.trim();
+      //   console.log(cube);
+      // Iterate over the object, convert the control into array with color and value
+      Object.entries(control).forEach((color) => {
+        const colorText = color[0];
+        // console.log(colorText);
+        const colorLimit = color[1];
+        // console.log(colorLimit); // number from the control
+        if (cube.includes(colorText)) {
+          const value = Number(cube.replace(colorText, "").trim());
+
+          // part 1
+          if (value > colorLimit) isValid = false;
+
+          // part 2
+          if (value > controlLine[colorText]) controlLine[colorText] = value;
+        }
+      });
+    });
+
+  if (isValid) p1Total += lineIndex + 1;
+  //   console.log(lineIndex);
+
+  const totalLine = Object.entries(controlLine).reduce(
+    (accumulator, currentValue) => accumulator * currentValue[1],
+    1
+  );
+  p2Total += totalLine;
 });
-console.log({ gamesData }); // object with array with arrays of each grab
 
-const data = {
-  "Game 1": [
-    ["7 blue", "5 red"],
-    ["10 red", "7 blue"],
-    ["5 blue", "4 green", "15 red"],
-    ["4 green", "6 red", "7 blue"],
-    ["5 green", "8 blue", "4 red"],
-    ["5 red", "4 blue", "3 green"],
-  ],
-  "Game 2": [
-    ["8 green", "3 red"],
-    ["7 blue", "6 red", "8 green"],
-    ["7 blue", "3 green", "6 red"],
-    ["8 green", "6 blue", "11 red"],
-    ["6 blue", "3 green", "12 red"],
-  ],
-  "Game 3": [
-    ["6 blue", "3 red", "7 green"],
-    ["3 red", "3 green", "8 blue"],
-    ["8 blue", "11 red", "4 green"],
-    ["5 blue", "7 red", "6 green"],
-    ["9 blue", "7 green", "1 red"],
-  ],
-  "Game 4": [
-    ["3 red", "4 green"],
-    ["5 red", "1 blue"],
-    ["2 green"],
-    ["3 green", "1 blue"],
-    ["2 green", "1 blue", "1 red"],
-  ],
-  "Game 5": [
-    ["17 red", "5 blue", "3 green"],
-    ["8 green", "9 red", "10 blue"],
-    ["2 green", "9 blue", "4 red"],
-  ],
-};
+console.log(`Result part 1: ${p1Total} | Result part 2: ${p2Total}`);
 
-// The Elf would first like to know which games would have been possible if the bag contained only
-// 12 red cubes, 13 green cubes, and 14 blue cubes?
+// PART 2
+// what is the fewest number of cubes of each color that could have been in the bag to make the game possible?
+// The power of a set of cubes is equal to the numbers of red, green, and blue cubes multiplied together.
