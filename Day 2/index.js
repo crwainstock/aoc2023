@@ -38,13 +38,20 @@ const lines = content.split("\n").filter(Boolean);
 // Initialize an empty object to store the processed data
 const gamesData = {};
 
-// Iterate through each line to extract game number and information
 lines.forEach((line) => {
   const [gameNumber, gameInfo] = line.split(":");
   const gameKey = gameNumber.trim();
-  const gameValue = gameInfo.trim();
+  const gameValues = gameInfo.split(";").map((value) => value.trim());
 
   // Store the information in the gamesData object
-  gamesData[gameKey] = gameValue;
+  gamesData[gameKey] = gameValues;
 });
 console.log({ gamesData }); // object with key, value pairs
+
+// let data = {
+// "Game 1": "3 blue, 4 red, 1 red, 2 green, 6 blue; 2 green"
+// "Game 2": 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
+// "Game 3": 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
+// "Game 4": 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
+// "Game 5": 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
+// }
