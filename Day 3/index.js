@@ -32,60 +32,101 @@ const testLines = testData.split("\n");
 // For preceeding and subsequent lines, compare location of numbers and symbols (not periods)
 // If a number and symbol (in same line, previous line, or subsequent line) have indices within one number of each other (plus or minus one from any number), add the whole number to the sum
 
-// I wasn't able to get my code working, but I found another example (below). Instead of getting my code working,
-// I focused on understanding the code below (https://pastecode.io/s/gwa8u3bz)
+function isValidChar(char) {
+  return !isNaN(parseInt(char)) || ["*", "#", "+", "$"].includes(char);
+}
 
-function solve(content) {
-  const data = content.split("\n").map((line) => line.split(""));
-
-  const neighbors = [
-    [0, -1],
-    [0, 1],
-    [-1, 0],
-    [1, 0],
-    [-1, -1],
-    [-1, 1],
-    [1, -1],
-    [1, 1],
-  ];
-  const isSymbol = (char) => !!char && char !== "." && !/\d/.test(char);
-  const isGear = (char) => char === "*";
-  const parts = {};
-
-  rows: for (let r = 0; r < data.length; r++) {
-    let cur = "";
-    cols: for (let c = 0; c < data[r].length; c++) {
-      if (/\d/.test(data[r][c])) {
-        cur += data[r][c];
-        if (!/\d/.test(data[r][c + 1])) {
-          cyphers: for (let k = 0; k < cur.length; k++) {
-            neighbors: for (const [dr, dc] of neighbors) {
-              const symbol = data[r + dr]?.[c + dc - k];
-              if (isSymbol(symbol)) {
-                const key = `${symbol},${r + dr},${c + dc - k}`;
-                if (!parts[key]) parts[key] = [];
-                parts[key].push(+cur);
-                break cyphers;
-              }
-            }
-          }
-          cur = "";
-        }
+function sumAdjacentNumbers(testData, row, col) {
+  let totalSum = 0;
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      const newRow = row + i;
+      const newCol = col + j;
+      if (
+        newRow >= 0 &&
+        newRow < testData.length &&
+        newCol >= 0 &&
+        newCol < testData[newRow].length &&
+        (i !== 0 || j !== 0) &&
+        isValidChar(testData[newRow][newCol])
+      ) {
+        totalSum += parseInt(testData[newRow][newCol]) || 0;
       }
     }
   }
-
-  const sum = [0, 0];
-  for (const key in parts) {
-    sum[0] += parts[key].reduce((acc, cur) => acc + cur, 0);
-    if (isGear(key[0]) && parts[key].length === 2)
-      sum[1] += parts[key].reduce((acc, cur) => acc * cur, 1);
-  }
-  console.log(sum);
-  //   console.log(parts);
-
-  return sum;
+  return totalSum;
 }
 
-solve(content);
-// answer is too high...?
+function findMissingPart(testData) {
+  let totalSum = 0;
+  for (let row = 0; row < testData.length; row++) {
+    for (let col = 0; col < testData[row].length; col++) {
+      const currentChar = testData[row][col];
+      if (isValidChar(currentChar)) {
+        totalSum += sumAdjacentNumbers(testData, row, col);
+      }
+    }
+  }
+  return totalSum;
+}
+
+const result = findMissingPart(testData);
+console.log("Sum of adjacent numbers:", result);
+
+// I wasn't able to get my code working, but I found another example (below). Instead of getting my code working,
+// I focused on understanding the code below (https://pastecode.io/s/gwa8u3bz)
+
+// function solve(content) {
+//   const data = content.split("\n").map((line) => line.split(""));
+
+//   const neighbors = [
+//     [0, -1],
+//     [0, 1],
+//     [-1, 0],
+//     [1, 0],
+//     [-1, -1],
+//     [-1, 1],
+//     [1, -1],
+//     [1, 1],
+//   ];
+//   const isSymbol = (char) => !!char && char !== "." && !/\d/.test(char);
+//   const isGear = (char) => char === "*";
+//   const parts = {};
+
+//   rows: for (let r = 0; r < data.length; r++) {
+//     let cur = "";
+//     cols: for (let c = 0; c < data[r].length; c++) {
+//       if (/\d/.test(data[r][c])) {
+//         cur += data[r][c];
+//         if (!/\d/.test(data[r][c + 1])) {
+//           cyphers: for (let k = 0; k < cur.length; k++) {
+//             neighbors: for (const [dr, dc] of neighbors) {
+//               const symbol = data[r + dr]?.[c + dc - k];
+//               if (isSymbol(symbol)) {
+//                 const key = `${symbol},${r + dr},${c + dc - k}`;
+//                 if (!parts[key]) parts[key] = [];
+//                 parts[key].push(+cur);
+//                 break cyphers;
+//               }
+//             }
+//           }
+//           cur = "";
+//         }
+//       }
+//     }
+//   }
+
+//   const sum = [0, 0];
+//   for (const key in parts) {
+//     sum[0] += parts[key].reduce((acc, cur) => acc + cur, 0);
+//     if (isGear(key[0]) && parts[key].length === 2)
+//       sum[1] += parts[key].reduce((acc, cur) => acc * cur, 1);
+//   }
+//   console.log(sum);
+//   //   console.log(parts);
+
+//   return sum;
+// }
+
+// solve(content);
+// // answer is too high...?
