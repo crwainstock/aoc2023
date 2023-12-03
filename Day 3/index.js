@@ -16,10 +16,11 @@
 const fs = require("fs");
 const content = fs.readFileSync("day3Data.txt", { encoding: "utf-8" });
 const lines = content.split("\n");
+
 const testData = fs.readFileSync("testData.txt", { encoding: "utf-8" });
 const testLines = testData.split("\n");
 
-console.log(testData);
+// console.log(testData);
 
 // PSEUDO-CODE
 
@@ -27,13 +28,64 @@ console.log(testData);
 // Create a sum variable
 // Loop over each line, note index of where numbers and symbols are, each line should have its own array within the numberIndex or symbolIndex array
 // If a character is a number, keep looking to see if there are numbers that follow (2-4 digit numbers)
-// Add whole number (however long it is) to the numberIndex array
 // When the whole line has been looped though, create a new array within the numberIndex array for the next line (each line should have their own array)
 // For preceeding and subsequent lines, compare location of numbers and symbols (not periods)
-// If index of number is next to symbol (in same line, preceeding, or subsequent lines), add it to the sum
+// If a number and symbol (in same line, previous line, or subsequent line) have indices within one number of each other (plus or minus one from any number), add the whole number to the sum
 
-let sum = 0;
-let numberIndex = [];
-let symbolIndex = [];
+// I wasn't able to get my code working, but I found another example (below). Instead of getting my code working,
+// I focused on understanding the code below (https://pastecode.io/s/gwa8u3bz)
 
-for (let i = 0; i <= testLines.length; i++) {}
+function solve(content) {
+  const data = content.split("\n").map((line) => line.split(""));
+
+  const neighbors = [
+    [0, -1],
+    [0, 1],
+    [-1, 0],
+    [1, 0],
+    [-1, -1],
+    [-1, 1],
+    [1, -1],
+    [1, 1],
+  ];
+  const isSymbol = (char) => !!char && char !== "." && !/\d/.test(char);
+  const isGear = (char) => char === "*";
+  const parts = {};
+
+  rows: for (let r = 0; r < data.length; r++) {
+    let cur = "";
+    cols: for (let c = 0; c < data[r].length; c++) {
+      if (/\d/.test(data[r][c])) {
+        cur += data[r][c];
+        if (!/\d/.test(data[r][c + 1])) {
+          cyphers: for (let k = 0; k < cur.length; k++) {
+            neighbors: for (const [dr, dc] of neighbors) {
+              const symbol = data[r + dr]?.[c + dc - k];
+              if (isSymbol(symbol)) {
+                const key = `${symbol},${r + dr},${c + dc - k}`;
+                if (!parts[key]) parts[key] = [];
+                parts[key].push(+cur);
+                break cyphers;
+              }
+            }
+          }
+          cur = "";
+        }
+      }
+    }
+  }
+
+  const sum = [0, 0];
+  for (const key in parts) {
+    sum[0] += parts[key].reduce((acc, cur) => acc + cur, 0);
+    if (isGear(key[0]) && parts[key].length === 2)
+      sum[1] += parts[key].reduce((acc, cur) => acc * cur, 1);
+  }
+  console.log(sum);
+  //   console.log(parts);
+
+  return sum;
+}
+
+solve(content);
+// answer is too high...?
