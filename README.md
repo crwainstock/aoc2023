@@ -25,3 +25,7 @@ I don't know what the ethics of submitting responses with code that isn't 100% m
 Something to look into more: [2D Arrays in JavaScript](https://www.freecodecamp.org/news/javascript-2d-arrays/)
 
 ### Day 4
+
+Useful resources:
+
+- [Math.pow javascript method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow)

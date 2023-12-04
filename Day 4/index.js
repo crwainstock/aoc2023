@@ -15,7 +15,38 @@
 // 4. Use the length of the array of matches to determine the number of points -- double each time
 
 const fs = require("fs");
+// FULL DATA
 const content = fs.readFileSync("day4Data.txt", { encoding: "utf-8" });
+const processedContent = content.split("\n").map((line, index) => {
+  const [firstSet, secondSet] = line
+    .replace(/^Card\s*\d+:\s*|\r$/g, "")
+    .split(/\s*\|\s*/);
+
+  if (secondSet === undefined) {
+    console.log(`Invalid line format at line ${index + 1}:`, line);
+    return null; // or handle as needed
+  }
+
+  return [
+    firstSet.split(/\s+/).filter(Boolean),
+    secondSet.split(/\s+/).filter(Boolean),
+  ];
+});
+
+const validProcessedContent = processedContent.filter(Boolean);
+
+// console.log(validProcessedContent);
+
+// const processedContent = content.split("\n").map((line) => {
+//   const [firstSet, secondSet] = line
+//     .replace(/^Card \d+:|\r$/g, "")
+//     .split(/\s*\|\s*/);
+//   return [
+//     firstSet.split(/\s+/).filter(Boolean),
+//     secondSet.split(/\s+/).filter(Boolean),
+//   ];
+// });
+// console.log(processedContent);
 
 // TEST DATA
 const testData = fs.readFileSync("testData.txt", { encoding: "utf-8" });
@@ -32,9 +63,9 @@ const processedTestData = testData.split("\n").map((line) => {
 // console.log(processedTestData);
 // FUNCTION TO FIND MATCHES IN ARRAYS OF NUMBERS
 let matches = [];
-const findMatches = (processedTestData) => {
-  for (let i = 0; i < processedTestData.length; i++) {
-    const [firstSet, secondSet] = processedTestData[i];
+const findMatches = (validProcessedContent) => {
+  for (let i = 0; i < validProcessedContent.length; i++) {
+    const [firstSet, secondSet] = validProcessedContent[i];
     const commonNumbers = [];
     for (const num of firstSet) {
       if (secondSet.includes(num)) {
@@ -50,18 +81,7 @@ const findMatches = (processedTestData) => {
   return matches;
 };
 
-// Function to double value to get points value
-// const doubleValueNTimes = (value, n) => {
-//   if (n === 0) {
-//     return value;
-//   } else {
-//     // double the value one fewer times than total number of values (because first value is one)
-//     return doubleValueNTimes(value * 2, n - 1);
-//   }
-// };
-
 const findCardValue = (matches) => {
-  //   let allCardsValue = 0;
   let cardValue = 0;
 
   //Loop through matches array of arrays
@@ -79,5 +99,5 @@ const findCardValue = (matches) => {
   return cardValue;
 };
 
-findMatches(processedTestData);
+findMatches(processedContent);
 findCardValue(matches);
