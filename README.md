@@ -16,8 +16,12 @@ With Day 2, I also relied heavily on this great example from [LuBernardino](http
 
 Whew! I did not solve this puzzle. I wrote some pseudo-code that I felt sort of happy with, like, maybe this could get me in the right direction, but no.
 
-So, I found a possible solution online (from Reddit), and it was working with the sample data. But the solution for the whole data set is too high. So, I'm not sure what's not right.
+So, I found a possible solution online (from Reddit), and it was working with the sample data. But the solution for the whole data set is too high. So, I'm not sure what's not right. If comments online are any indication, this challenge was tricky for other people as well, so I don't feel too bad about it.
 
 Instead of working with my own ideas for the solution, I decided to focus on understanding [the solution I found online](https://pastecode.io/s/gwa8u3bz).
 
 I don't know what the ethics of submitting responses with code that isn't 100% my own, but I think, for me at this point, the value of this experience lies in trying to understand the solutions put forth by others. There are so many things that I don't know about, that I have no idea even exist, and it feels insurmountable to try to write code from scratch on my own to even begin to deal with the puzzles.
+
+Something to look into more: [2D Arrays in JavaScript](https://www.freecodecamp.org/news/javascript-2d-arrays/)
+
+### Day 4
