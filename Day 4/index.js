@@ -33,7 +33,6 @@ console.log(processedTestData);
 
 const findMatches = (processedTestData) => {
   let matches = [];
-
   for (let i = 0; i < processedTestData.length; i++) {
     const [firstSet, secondSet] = processedTestData[i];
     const commonNumbers = [];
@@ -47,6 +46,33 @@ const findMatches = (processedTestData) => {
     }
   }
   console.log(matches);
+  console.log(matches.length);
   return matches;
 };
+
+// Function to double value to get points value
+const doubleValueNTimes = (value, n) => {
+  if (n === 0) {
+    return value;
+  } else {
+    return doubleValueNTimes(value * 2, n - 1);
+  }
+};
+
+const findCardValue = (matches) => {
+  let cardValue = 0;
+  //Loop through matches array of arrays
+  for (let i = 0; i <= matches.length; i++) {
+    // How many values are in each array
+    console.log(matches[i]); // undefined...
+    let doubles = matches[i].length;
+    cardValue += 1;
+    // Uses function to double value based on length of each array
+    cardValue += doubleValueNTimes(1, doubles);
+  }
+  console.log(cardValue);
+  return cardValue;
+};
+
 findMatches(processedTestData);
+// findCardValue(matches);
