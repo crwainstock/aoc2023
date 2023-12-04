@@ -45,34 +45,37 @@ const findMatches = (processedTestData) => {
       matches.push(commonNumbers);
     }
   }
-  //   console.log(matches);
+  console.log(matches);
   //   console.log(matches.length);
   return matches;
 };
 
 // Function to double value to get points value
-const doubleValueNTimes = (value, n) => {
-  if (n === 0) {
-    return value;
-  } else {
-    // double the value one fewer times than total number of values (because first value is one)
-    return doubleValueNTimes(value * 2, n - 1);
-  }
-};
+// const doubleValueNTimes = (value, n) => {
+//   if (n === 0) {
+//     return value;
+//   } else {
+//     // double the value one fewer times than total number of values (because first value is one)
+//     return doubleValueNTimes(value * 2, n - 1);
+//   }
+// };
 
 const findCardValue = (matches) => {
   //   let allCardsValue = 0;
   let cardValue = 0;
+
   //Loop through matches array of arrays
   for (let i = 0; i < matches.length; i++) {
     // How many values are in each array
     let doubles = matches[i].length;
     // console.log(doubles); // 4, 2, 2, 1 -- expected
+
     // Uses function to double value based on length of each array
-    cardValue += doubleValueNTimes(1, doubles);
-    console.log(cardValue);
+    cardValue += 1 * Math.pow(2, doubles - 1);
+
+    console.log(`Card ${i + 1} points: ${cardValue}`);
   }
-  //   console.log(cardValue);
+  console.log(`Total Card Value: ${cardValue}`);
   return cardValue;
 };
 
