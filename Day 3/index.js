@@ -17,8 +17,13 @@ const fs = require("fs");
 const content = fs.readFileSync("day3Data.txt", { encoding: "utf-8" });
 const lines = content.split("\n");
 
-const engineSchematic = fs.readFileSync("testData.txt", { encoding: "utf-8" });
+// const engineSchematic = fs.readFileSync("testData.txt", { encoding: "utf-8" });
 // const testLines = testData.split("\n");
+
+// ALTERNATIVE TEST DATA TO ACCOUNT FOR OTHER EDGE CASES
+const engineSchematic = fs.readFileSync("altTestData.txt", {
+  encoding: "utf-8",
+});
 
 // console.log(testData);
 
