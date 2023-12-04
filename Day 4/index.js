@@ -17,6 +17,7 @@
 const fs = require("fs");
 const content = fs.readFileSync("day4Data.txt", { encoding: "utf-8" });
 
+// TEST DATA
 const testData = fs.readFileSync("testData.txt", { encoding: "utf-8" });
 const processedTestData = testData.split("\n").map((line) => {
   const [firstSet, secondSet] = line
@@ -29,3 +30,23 @@ const processedTestData = testData.split("\n").map((line) => {
 });
 
 console.log(processedTestData);
+
+const findMatches = (processedTestData) => {
+  let matches = [];
+
+  for (let i = 0; i < processedTestData.length; i++) {
+    const [firstSet, secondSet] = processedTestData[i];
+    const commonNumbers = [];
+    for (const num of firstSet) {
+      if (secondSet.includes(num)) {
+        commonNumbers.push(num);
+      }
+    }
+    if (commonNumbers.length > 0) {
+      matches.push(commonNumbers);
+    }
+  }
+  console.log(matches);
+  return matches;
+};
+findMatches(processedTestData);
