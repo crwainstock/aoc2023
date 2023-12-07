@@ -112,3 +112,6 @@ const part2 = () => {
 
 console.log(`Part 1: ${part1()}`);
 console.log(`Part 2: ${part2()}`);
+
+// ✨✨✨ The code above was guided by Noah Development (https://www.youtube.com/watch?v=z0TonEep6tw).
+// I couldn't have done it on my own. Thanks!
