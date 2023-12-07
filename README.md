@@ -29,3 +29,7 @@ Something to look into more: [2D Arrays in JavaScript](https://www.freecodecamp.
 Useful resources:
 
 - [Math.pow javascript method](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow)
+
+### Day 5
+
+### Day 6
