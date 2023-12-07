@@ -35,3 +35,10 @@ const content = fs
 let lines = content.split("\n");
 
 console.log(lines);
+
+const part1 = () => {
+  let time = [];
+  let distance = [];
+};
+
+const part2 = () => {};
