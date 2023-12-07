@@ -34,11 +34,17 @@ const content = fs
   .replace(/(\r)/gm, "");
 let lines = content.split("\n");
 
-console.log(lines);
+// console.log(lines);
+console.log(`Part 1: ${part1()}`);
+console.log(`Part 2: ${part2()}`);
 
 const part1 = () => {
-  let time = [];
+  let times = [];
   let distance = [];
+
+  let match;
+  // d = digit, + matches 1 or more instances of digits, g = global, compares whole string
+  let pattern = /\d+/g;
 };
 
 const part2 = () => {};
