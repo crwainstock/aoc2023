@@ -3,6 +3,7 @@
 **/day2Data.txt
 **/day3Data.txt
 **/day4Data.txt
+**/input.txt
 
 # Recursively ignore all files matching ".txt"
 **/*.txt
