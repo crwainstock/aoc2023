@@ -27,6 +27,11 @@
 // For each whole millisecond you spend at the beginning of the race holding down the
 // button, the boat's speed increases by one millimeter per millisecond.
 
+// Part 2:
+
+// Time: 71530;
+// Distance: 940200;
+
 const fs = require("fs");
 const content = fs
   .readFileSync("input.txt", { encoding: "utf-8" })
@@ -35,16 +40,75 @@ const content = fs
 let lines = content.split("\n");
 
 // console.log(lines);
-console.log(`Part 1: ${part1()}`);
-console.log(`Part 2: ${part2()}`);
+
+const testContent = fs
+  .readFileSync("testData.txt", { encoding: "utf-8" })
+  .toString()
+  .replace(/(\r)/gm, "");
+let testLines = testContent.split("\n");
 
 const part1 = () => {
+  let total = 1;
+
   let times = [];
-  let distance = [];
+  let distances = [];
 
   let match;
   // d = digit, + matches 1 or more instances of digits, g = global, compares whole string
   let pattern = /\d+/g;
+
+  //Creating arrays with time and distance data (only numbers)
+  while ((match = pattern.exec(lines[0])) !== null) {
+    times.push(parseInt(match[0]));
+  }
+  while ((match = pattern.exec(lines[1])) !== null) {
+    distances.push(parseInt(match[0]));
+  }
+
+  //Loop through array of times, add ways to win to variable
+  for (let i = 0; i < times.length; i++) {
+    let waysToWin = 0;
+    for (let buttonLength = 0; buttonLength < times[i]; buttonLength++) {
+      //time that we have left * button length > distance traveled
+      if ((times[i] - buttonLength) * buttonLength > distances[i]) {
+        waysToWin++;
+      }
+    }
+    // multiply the number of ways to win to getn the margin of error
+    total *= waysToWin;
+  }
+  return total;
 };
 
-const part2 = () => {};
+const part2 = () => {
+  let times = [];
+  let distances = [];
+
+  let match;
+  // d = digit, + matches 1 or more instances of digits, g = global, compares whole string
+  let pattern = /\d+/g;
+
+  //Creating arrays with time and distance data (only numbers)
+  while ((match = pattern.exec(lines[0])) !== null) {
+    times.push(match[0]);
+  }
+  while ((match = pattern.exec(lines[1])) !== null) {
+    distances.push(match[0]);
+  }
+
+  let time = parseInt(times.join(``));
+  let distance = parseInt(distances.join(``));
+
+  let waysToWin = 0;
+  for (let buttonLength = 0; buttonLength < time; buttonLength++) {
+    //time that we have left * button length > distance traveled
+    if ((time - buttonLength) * buttonLength > distance) {
+      waysToWin++;
+    }
+  }
+  // There's only one race, so you don't need to multiply the values, just add all the ways to win
+  return waysToWin;
+};
+
+console.log(`Part 1: ${part1()}`);
+console.log(`Part 2: ${part2()}`);
